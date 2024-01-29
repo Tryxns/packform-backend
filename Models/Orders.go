@@ -35,7 +35,7 @@ func GetOrders(results *[]ResultOrder, limit int, offset int, order string, prod
 	if product != "" {
 		query_string.Where("LOWER(order_items.product) like ?", fmt.Sprintf("%%%s%%", product))
 	}
-	query_string.Limit(limit).Offset(offset).Count(&count)
+	query_string.Count(&count)
 	query_string.Limit(limit).Offset(offset).Scan(results)
 
 	return count, nil
