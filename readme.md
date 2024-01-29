@@ -2,9 +2,13 @@ How to setup:
 
 0. Prerequisites
     > Postgres installed
+
     > Internet connection
+
     > Go installed
+
     > NPM installed
+
 
 1. Prepare the database
     > 1.1 Create new database & schema
