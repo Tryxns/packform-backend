@@ -3,6 +3,7 @@ package Models
 import (
 	"fmt"
 	"packform/Config"
+	"strings"
 )
 
 func GetAllOrders(orders *[]Orders) (err error) {
@@ -38,7 +39,7 @@ func GetOrders(results *[]ResultOrder, limit int, offset int, search string, sta
 	if search != "" {
 		query_string.Where(
 			"LOWER(order_name) like ? or LOWER(order_items.product) like ?",
-			fmt.Sprintf("%%%s%%", search), fmt.Sprintf("%%%s%%", search),
+			fmt.Sprintf("%%%s%%", strings.ToLower(search)), fmt.Sprintf("%%%s%%", strings.ToLower(search)),
 		)
 	}
 	query_string.Count(&count)
