@@ -12,7 +12,7 @@ func GetAllOrders(orders *[]Orders) (err error) {
 	return nil
 }
 
-func GetOrders(results *[]ResultOrder, limit int, offset int, order string, product string, start_date string, end_date string) (count int64, err error) {
+func GetOrders(results *[]ResultOrder, limit int, offset int, search string, start_date string, end_date string) (count int64, err error) {
 	count = 0
 	query_string := Config.DB.Table("packform.orders").Debug().
 		Select(
@@ -29,11 +29,17 @@ func GetOrders(results *[]ResultOrder, limit int, offset int, order string, prod
 	if start_date != "" && end_date != "" {
 		query_string.Where("orders.created_at between ? and ?", start_date, end_date)
 	}
-	if order != "" {
-		query_string.Where("LOWER(order_name) like ?", fmt.Sprintf("%%%s%%", order))
-	}
-	if product != "" {
-		query_string.Where("LOWER(order_items.product) like ?", fmt.Sprintf("%%%s%%", product))
+	// if order != "" {
+	// 	query_string.Where("LOWER(order_name) like ?", fmt.Sprintf("%%%s%%", order))
+	// }
+	// if product != "" {
+	// 	query_string.Where("LOWER(order_items.product) like ?", fmt.Sprintf("%%%s%%", product))
+	// }
+	if search != "" {
+		query_string.Where(
+			"LOWER(order_name) like ? or LOWER(order_items.product) like ?",
+			fmt.Sprintf("%%%s%%", search), fmt.Sprintf("%%%s%%", search),
+		)
 	}
 	query_string.Count(&count)
 	query_string.Limit(limit).Offset(offset).Scan(results)

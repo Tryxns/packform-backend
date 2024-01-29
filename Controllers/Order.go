@@ -1,7 +1,6 @@
 package Controllers
 
 import (
-	"fmt"
 	"net/http"
 	"packform/Models"
 	"strconv"
@@ -20,11 +19,11 @@ func GetOrders(c *gin.Context) {
 	var orders []Models.ResultOrder
 	qry_limit := c.Query("limit")
 	qry_offset := c.Query("offset")
-	filter_product := c.Query("product")
-	filter_order := c.Query("order")
+	// filter_product := c.Query("product")
+	// filter_order := c.Query("order")
+	search := c.Query("search")
 	start_date := c.Query("start_date")
 	end_date := c.Query("end_date")
-	fmt.Println(qry_limit, qry_offset, filter_product, filter_order)
 
 	var limit int
 	if qry_limit == "" {
@@ -40,7 +39,7 @@ func GetOrders(c *gin.Context) {
 		offset, _ = strconv.Atoi(qry_offset)
 	}
 
-	count, err := Models.GetOrders(&orders, limit, offset, filter_order, filter_product, start_date, end_date)
+	count, err := Models.GetOrders(&orders, limit, offset, search, start_date, end_date)
 
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
