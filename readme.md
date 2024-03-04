@@ -24,8 +24,4 @@ How to setup:
     > 2.3 In terminal, put the current dir into inside this folder project level, then run command "go run main.go"
 
 3. Prepare the front-end
-    > 3.1 Clone from the given repo
-
-    > 3.2 In terminal, put the current dir into inside the frontend folder project level, then run command "npm install"
-
-    > 3.3 open the index.html in browser
+    > 3.1 Go to https://github.com/Tryxns/money_collector_frontend & follow the instructions
